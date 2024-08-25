@@ -15,6 +15,7 @@ import kotlin.io.*
 import kotlin.jvm.*
 import kotlin.jvm.functions.*
 import kotlin.jvm.internal.*
+import kotlin.math.max
 import kotlin.ranges.*
 import kotlin.sequences.*
 import kotlin.text.*
@@ -24,36 +25,57 @@ import kotlin.text.*
  *
  * The function accepts INTEGER_ARRAY arr as parameter.
  */
+fun help(arr:Array<Int>):Int{
+    for(i in 0 until arr.size-1){
 
+        if(arr[i]>arr[i+1]){
+        //    println("${arr[i]} ${i}")
+            return arr[i]
+            break
+        }
+    }
+    return -1
+}
 fun almostSorted(arr: Array<Int>): Unit {
     // Write your code here
-    var count = 0
-    var list=mutableListOf<Int>()
-for(i in 0 until arr.size-1){
-    if(arr[i]>arr[i+1]){
-        count+=2
-        list.add(i)
-    }}
-    println(count)
-
-    if(count==0){
+    var list = mutableListOf<Int>()
+    if (help(arr) == -1) {
         println("yes")
-    }else if (count>=1){
-        if(count in 1..2){
+    } else {
+        var x = help(arr)
+        var y = arr.indexOf(x)
+        for (i in y until arr.size) {
+            if (arr[i] <= x) {
+                list.add(i)
+            }
+
+        }
+        if (list.size == 2) {
             println("yes")
-            if(list[0]+1==list[1]){
-                println("swap ${list[0]+1} ${list[1]+1}")
+            println("swap ${list[0] + 1} ${list[1] + 1}")
+        } else {
+            if (arr[list[list.size - 1]] < arr[list[list.size - 2]]) {
+                if (arr[list[list.size - 3]] < arr[list[list.size - 2]]) {
+                    println("yes")
+                    println("swap ${list[0] + 1} ${list[list.size - 1] + 1}")
+                } else {
+                    println("yes")
+                    println("reverse ${list[0] + 1} ${list[list.size - 1] + 1}")
+                }
             }
-            else{
-                println("reverse ${list[0]+1} ${list.size+2}")
+            //  println(list)
+
+            else {
+
+                println("no")
             }
 
-    }else{
-        println("revsere ${list[0]+1} + ${list.size+2}")
+        }
+
+
     }
 
 
-    }
 
 
 
